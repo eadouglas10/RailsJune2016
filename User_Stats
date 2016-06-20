@@ -1,0 +1,79 @@
+puts "Begin entering input"
+input = gets.chomp
+
+unless input.to_i.to_s == input || input.to_f.to_s == input#unless input is a number
+  output = input
+  e_count = 0
+  word_count = 0
+
+  while(true) do
+    puts "Continue entering input (hit return if done)."
+    input = gets.chomp
+    break if input == ""
+    unless input.to_i.to_s == input || input.to_f.to_s == input
+      output += input
+      word_count += 1
+    else
+      puts "Inconsistent input!"
+      break
+    end
+  end
+
+  #do e count here
+  output.each_char do |letter|
+    if letter == "e"
+      e_count += 1
+    end
+  end
+  #do string output here
+  puts output
+  puts "The letter 'e' occured " + e_count.to_s + " times."
+  average_length = output.length / word_count.to_f
+  puts "The words had an average length of " + average_length.to_s + " letters."
+#end of string stats
+
+else #input is a number
+  total = input.to_f
+  numbers = [total]
+  n = 1
+  still_counting = true
+
+  while(true) do
+    puts "Continue entering input (hit return if done)."
+    input = gets.chomp
+    break if input == ""
+    if input.to_i.to_s == input || input.to_f.to_s == input
+      input = input.to_f
+      total += input
+      n += 1
+      numbers.push(input)
+    else
+      puts "Inconsistent input!"
+      break
+    end
+
+  end
+
+  average = total / n
+
+  #find standard deviation
+  sum_of_squared_differences = 0
+  numbers.each do |number|
+    sum_of_squared_differences += (number - average) ** 2
+  end
+  average_squared_difference = sum_of_squared_differences / average
+  std_dev = average_squared_difference ** 0.5
+
+  #find median
+  numbers.sort!
+  if numbers.length % 2 == 0 #median is between middle two values
+    median = (numbers[numbers.length / 2 - 1] + numbers[numbers.length / 2]) / 2.0
+  else #median is middle value
+    median = numbers[(numbers.length - 1) / 2]
+  end
+  puts "The average value is " + average.to_s
+  puts "The total is " + total.to_s
+  puts "The median value is " + median.to_s
+  puts "The standard deviation is " + std_dev.to_s
+
+end #of integer stats
